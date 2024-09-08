@@ -20,7 +20,7 @@ Por último, informe o host e a porta do seu servidor Node.JS
 Após realizar as configurações no arquivo .env, ainda na pasta backend execute o comando ```node sync.js``` para que a aplicação crie as tabelas necessárias.
 Realizado a criação execute o comando ```npm start``` para iniciar o servidor backend
 
-Depois disso acesse a pasta frontend e execute o comando ```npm install``` para instalar os módulos e dependências e depois execute o comando ```npm start```
+Depois disso acesse a pasta frontend e a pasta tmdb-client e execute o comando ```npm install``` para instalar os módulos e dependências e depois execute o comando ```npm start```
 
 # Observações
 
