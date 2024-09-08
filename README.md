@@ -24,5 +24,7 @@ Depois disso acesse a pasta frontend e a pasta tmdb-client e execute o comando `
 
 # Observações
 
+Para compartilhar a lista basta abrir o link do frontend mais /list/username (Exemplo: localhost:8000/list/carlos-ex-santos
+
 O projeto será fatorado futuramente para diminuir a repetição de códigos e evitar possíveis erros
 
