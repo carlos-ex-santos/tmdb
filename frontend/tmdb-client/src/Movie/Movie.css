@@ -1,0 +1,13 @@
+.card-text {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+}
+
+.card-text:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
