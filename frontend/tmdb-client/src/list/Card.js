@@ -6,12 +6,12 @@ const Card = (prop) => {
 
     const [movie, setMovie] = useState(null);
     const [session, setSession] = useState(null)
-    const [username, setUsername] = useState(null)
+    const urlApi = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const authToken = localStorage.getItem('authToken');
 
-        axios.get(`http://localhost:4500/api/movie/${prop.id}`)
+        axios.get(`${urlApi}/movie/${prop.id}`)
             .then(response => {
                 setMovie(response.data);
             })
@@ -20,7 +20,7 @@ const Card = (prop) => {
                 setMovie(null)
             })
 
-        axios.get("http://localhost:4500/api/login/is-valid",{
+        axios.get(`${urlApi}/login/is-valid`,{
             headers:{ Authorization: authToken }
         })
             .then(response => {

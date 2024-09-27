@@ -5,12 +5,11 @@ import Card from "./list/Card";
 
 const App = () => {
     const [movies, setMovies] = useState(null)
-    const [token, setToken] = useState('');
     const [title, setTitle] = useState('');
-    const url = `http://localhost:4500/api/movie/popular`
+    const urlApi = process.env.REACT_APP_API_URL
 
     const Search = () => {
-        axios.post("http://localhost:4500/api/movie", {
+        axios.post(`${urlApi}/movie`, {
             title: title
         }).then(response => {
             console.log(response.data)
@@ -42,7 +41,7 @@ const App = () => {
 
   
     useEffect(() => {
-          axios.get(url)
+          axios.get(`${urlApi}/movie/popular`)
             .then(response => {
               setMovies(response.data.results.slice(0, 10))
             })

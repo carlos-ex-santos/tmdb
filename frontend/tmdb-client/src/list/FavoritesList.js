@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../Navbar';
+
 
 const FavoritesList = (props) => {
     const { username } = useParams()
     const [movies, setMovies] = useState([]);
     const [user, setUser] = useState('')
-
+    const [link, setLink] = useState('')
+    const urlApi = process.env.REACT_APP_API_URL
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (props.user) {
             const authToken = localStorage.getItem('authToken');
 
             if(authToken){
-                axios.get("http://localhost:4500/api/login/is-valid", {
+                axios.get(`${urlApi}/login/is-valid`, {
                     headers: { Authorization: authToken }
                 })
                 .then(response => {
@@ -29,21 +32,26 @@ const FavoritesList = (props) => {
     }, [props.user]);
 
     useEffect(() => {
+        const host = window.location.host
+
         const currentUsername = props.user ? user.username : username;
+
+        if (props.user && !user.username) return;
+
         if (typeof currentUsername === 'string') {
-            axios.get(`http://localhost:4500/api/list/${currentUsername}`)
+            axios.get(`${urlApi}/list/${currentUsername}`)
             .then(response => {
                 setMovies(response.data);
             })
             .catch(error => {
-                if(error.status == 404){
-                    setMovies('')
+                if(error.status === 404){
+                    setMovies([])
                 }
             });
-        }else if (props.user && currentUsername == undefined){
-            window.location.href="/"
+        }else if (props.user && currentUsername === undefined){
+            navigate("/")
         }
-    }, [user.username, username, props.user]);
+    }, [user.username, username, props.user, navigate]);
 
 
     return (
@@ -54,8 +62,8 @@ const FavoritesList = (props) => {
                 <div className="container">
                     <div className="col-lg-6 col-md-8 mx-auto">
                         <h1 className="fw-light text-center">
-                            { props.user ? ("Minha lista") 
-                            : (<>Lista do usuário <strong>{username}</strong></>)}</h1> 
+                            { props.user ? "Minha lista" 
+                            :<>Lista do usuário <strong>{username}</strong></>}</h1> 
                     </div>
                     <br/>
                     { movies ? (

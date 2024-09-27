@@ -9,7 +9,8 @@ const Movie = () => {
     const { id } = useParams()
     const [movie, setMovie] = useState(null)
     const [err, setErr] = useState(null)
-    const url = `http://localhost:4500/api/movie/${id}`
+    const urlApi = process.env.REACT_APP_API_URL
+    const url = `${urlApi}/movie/${id}`
 
     useEffect(() => {
         console.log(isNaN(id))

@@ -7,6 +7,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [err, setErr] = useState('');
   const [token, setToken] = useState('');
+  const buttonSubmit = document.getElementById('login');
+  const urlApi = process.env.REACT_APP_API_URL
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
@@ -15,34 +17,16 @@ const Login = () => {
     }
   }, []); 
 
-  useEffect(() => {
-    const keyDownHandler = (event) => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-
-        const buttonLogin = document.getElementById('login')
-        if (buttonLogin){
-          buttonLogin.click()
-        }
-      }
-    };
-
-    document.addEventListener('keydown', keyDownHandler);
-
-    return () => {
-        document.removeEventListener('keydown', keyDownHandler);
-    };
-},[])
-
   const loginSubmit = async (e) => {
     e.preventDefault();
+    buttonSubmit.disabled = true
     try {
-      const response = await axios.post('http://localhost:4500/api/login', { username, password });
+      const response = await axios.post(`${urlApi}/login`, { username, password });
       localStorage.setItem('authToken', response.data.token)
       setToken(response.data.token)
     } catch (error) {
       console.error('Erro ao fazer login', error);
-      if(error.status == 401){
+      if(error.status === 401){
         setErr('Usuário e/ou senha incorretos')
       }
     }
@@ -82,6 +66,11 @@ const Login = () => {
                 placeholder="Senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    loginSubmit(e);
+                  }
+                }}
               />
               <label htmlFor="password">Senha</label>
             </div>

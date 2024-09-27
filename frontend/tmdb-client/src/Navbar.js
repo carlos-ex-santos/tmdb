@@ -3,11 +3,12 @@ import axios from "axios";
 
 const Navbar = () => {
     const [user, setUser] = useState('');
+    const urlApi = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const authToken = localStorage.getItem('authToken');
         if (authToken){
-            axios.get(`http://localhost:4500/api/login/is-valid`,{
+            axios.get(`${urlApi}/login/is-valid`,{
                 headers:{authorization: authToken}
             })
             .then(response => {
