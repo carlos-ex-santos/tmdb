@@ -1,4 +1,5 @@
-import React, { useState, useNavigate } from 'react';
+import React, { useState  } from 'react';
+import { useNavigate } from 'react-router-dom';
 import App from './App'
 import Request from './functions/Request';
 
