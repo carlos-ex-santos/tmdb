@@ -50,11 +50,10 @@ const Register = () => {
             }
 
             const response = await Request.post('/register', data);
-            console.log(response)
             if (response.status === 201){
                 try{
+                    buttonSubmit.disabled = true
                     const response = await Request.post('/login', data)
-                    console.log(response.data.token)
                     setToken(response.data.token)
                     localStorage.setItem('authToken', response.data.token)
                     navigate("/")
