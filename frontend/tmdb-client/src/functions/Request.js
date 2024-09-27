@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const urlApi = "http://localhost:4500/api/"
+const urlApi = process.env.REACT_APP_API_URL
 
 const get = async (url, conf = null) => {
     try {
