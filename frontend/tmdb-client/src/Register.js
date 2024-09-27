@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useNavigate } from 'react';
 import App from './App'
 import Request from './functions/Request';
 
@@ -12,6 +12,7 @@ const Register = () => {
   const [err, setErr] = useState('');
   const [token, setToken] = useState('');
   const buttonSubmit = document.getElementById('register');
+  const navigate = useNavigate()
   
   const validatePass = (pass, repass) => {
         if (pass.length > 0 && repass.length > 0) {
@@ -26,7 +27,7 @@ const Register = () => {
     }
 
     const userExist = async (username) => {
-            const data = await Request.get(`list/${username}`)
+            const data = await Request.get(`/list/${username}`)
             if (data.status == 200){
                 buttonSubmit.disabled=true
                 setErr("Nome de usuário já existe")
@@ -48,22 +49,22 @@ const Register = () => {
                 password: password 
             }
 
-            const response = await Request.post('register', data);
+            const response = await Request.post('/register', data);
             console.log(response)
-            if (response.status == 201){
+            if (response.status === 201){
                 try{
-                    const response = await Request.post('login', data)
+                    const response = await Request.post('/login', data)
                     console.log(response.data.token)
                     setToken(response.data.token)
                     localStorage.setItem('authToken', response.data.token)
-                    window.location.href="/"
+                    navigate("/")
                 } catch (err) {
                     console.log(err)
                 }
             }
         } catch (error) {
             console.log(error)
-            if(error.status == 401){
+            if(error.status === 401){
                 setErr('Usuário e/ou senha incorretos')
             }
         }
